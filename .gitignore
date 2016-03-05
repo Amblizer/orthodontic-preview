@@ -1,0 +1,18 @@
+# Build #
+######################
+target
+
+# IDE #
+######################
+nbactions.xml
+nb-configuration.xml
+
+# OS generated files #
+######################
+.DS_Store
+Thumbs.db
+
+# Others #
+######################
+hs_err*.log
+
