@@ -3,7 +3,7 @@
 	<parent>
 		<artifactId>orthodontic-parent</artifactId>
 		<groupId>com.orthodonticpreview</groupId>
-		<version>1.0-SNAPSHOT</version>
+		<version>1.0.0</version>
 		<relativePath>../orthodontic-parent/pom.xml</relativePath>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
@@ -52,14 +52,14 @@
         <dependency>
             <groupId>com.orthodonticpreview</groupId>
             <artifactId>ortho-ui</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.0.0</version>
             <type>bundle</type>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.orthodonticpreview</groupId>
             <artifactId>ortho-datamodel</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.0.0</version>
             <type>bundle</type>
             <scope>provided</scope>
         </dependency>
