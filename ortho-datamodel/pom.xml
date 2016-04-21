@@ -3,7 +3,7 @@
     <parent>
         <artifactId>orthodontic-parent</artifactId>
         <groupId>com.orthodonticpreview</groupId>
-        <version>1.0.0</version>
+        <version>1.0.1</version>
         <relativePath>../orthodontic-parent/pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>

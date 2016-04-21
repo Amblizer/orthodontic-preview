@@ -45,7 +45,7 @@
 		<com.sun.media.j3d.version>1.5.2</com.sun.media.j3d.version>
 		<tilecachetool.version>1.0.2</tilecachetool.version>
                 
-                <orthodonticpreview.version>1.0.0</orthodonticpreview.version>
+                <orthodonticpreview.version>1.0.1</orthodonticpreview.version>
 
 		<windowsName>weasis-native</windowsName>
 	</properties>
