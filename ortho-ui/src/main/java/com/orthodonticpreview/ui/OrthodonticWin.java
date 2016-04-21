@@ -83,6 +83,8 @@ import com.orthodonticpreview.ui.internal.Messages;
 import java.awt.Color;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Locale;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.LookAndFeel;
 import org.weasis.core.api.explorer.ObservableEvent;
@@ -115,6 +117,18 @@ public class OrthodonticWin implements PropertyChangeListener {
     };
 
     private OrthodonticWin() {
+        
+        // Fix language (Weasis will use the last one saved)
+        String lang = BundleTools.SYSTEM_PREFERENCES.getProperty("locale.lang.orthodontic", "en");
+        Locale locale = textToLocale(lang);
+        // JVM Locale
+        Locale.setDefault(locale);
+        // LookAndFeel Locale
+        javax.swing.UIManager.getDefaults().setDefaultLocale(locale);
+        // For new components
+        JComponent.setDefaultLocale(locale);
+        
+        
         frame = new JFrame();
         frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         frame.addWindowListener(new WindowAdapter() {
@@ -453,6 +467,26 @@ public class OrthodonticWin implements PropertyChangeListener {
         final JDialog createOP
                 = new CreateOPDialog(getFrame());
         JMVUtils.showCenterScreen(createOP);
+    }
+    
+    public static Locale textToLocale(String value) {
+        if (value == null || value.trim().equals("")) { //$NON-NLS-1$
+            return Locale.ENGLISH;
+        }
+
+        if ("system".equals(value)) { //$NON-NLS-1$
+            String language = System.getProperty("user.language", "en"); //$NON-NLS-1$ //$NON-NLS-2$
+            String country = System.getProperty("user.country", ""); //$NON-NLS-1$ //$NON-NLS-2$
+            String variant = System.getProperty("user.variant", ""); //$NON-NLS-1$ //$NON-NLS-2$
+            return new Locale(language, country, variant);
+        }
+
+        String[] val = value.split("_", 3); //$NON-NLS-1$
+        String language = val.length > 0 ? val[0] : ""; //$NON-NLS-1$
+        String country = val.length > 1 ? val[1] : ""; //$NON-NLS-1$
+        String variant = val.length > 2 ? val[2] : ""; //$NON-NLS-1$
+
+        return new Locale(language, country, variant);
     }
 
     public static class HidingEclipseThemeConnector extends CommonEclipseThemeConnector {
