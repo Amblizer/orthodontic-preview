@@ -1,0 +1,55 @@
+<assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0 http://maven.apache.org/xsd/assembly-1.1.0.xsd">
+	<id>portable-dist</id>
+	<formats>
+		<format>zip</format>
+	</formats>
+	<includeBaseDirectory>false</includeBaseDirectory>
+	<fileSets>
+		<fileSet>
+			<!-- Copy jws jars -->
+			<directory>target/tmp</directory>
+			<outputDirectory>/weasis</outputDirectory>
+			<includes>
+				<include>/*.jar</include>
+				<include>/*.jar.pack.gz</include>
+				<include>bundle/repository.xml</include>
+				<include>bundle/*-windows-*.jar</include>
+				<include>bundle/*-linux-*.jar</include>
+				<include>bundle/*-macosx-*.jar</include>
+				<include>bundle/*-solaris-*.jar</include>
+				<include>bundle/*.jar${pack200.ext}</include>
+				<include>bundle-i18n/*.jar</include>
+				<include>bundle-i18n/buildNumber.properties</include>
+			</includes>
+		</fileSet>
+		<fileSet>
+			<!-- copy win32 exe -->
+			<directory>target/tmp</directory>
+			<includes>
+				<include>ortho-win32.exe</include>
+			</includes>
+			<fileMode>0755</fileMode>
+			<outputDirectory>/</outputDirectory>
+		</fileSet>
+		<fileSet>
+			<!-- Direct resources copy -->
+			<directory>src/main/resources-portable</directory>
+			<outputDirectory>/</outputDirectory>
+			<fileMode>0755</fileMode>
+			<directoryMode>0755</directoryMode>
+		</fileSet>
+		<fileSet>
+			<!-- copy resources -->
+			<directory>resources</directory>
+			<outputDirectory>/weasis/resources</outputDirectory>
+		</fileSet>
+		<fileSet>
+			<!-- copy OSGI framework config -->
+			<directory>etc/config</directory>
+			<outputDirectory>/weasis/conf</outputDirectory>
+			<filtered>true</filtered>
+		</fileSet>
+	</fileSets>
+</assembly>

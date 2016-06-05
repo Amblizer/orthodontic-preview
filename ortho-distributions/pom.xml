@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <parent>
+        <artifactId>orthodontic-parent</artifactId>
+        <groupId>com.orthodonticpreview</groupId>
+        <!-- Remove "-SNAPSHOT" for release -->
+        <version>1.0.2-SNAPSHOT</version>
+        <relativePath>../orthodontic-parent/pom.xml</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>ortho-distributions</artifactId>
+    <packaging>pom</packaging>
+    <name>Orthodontic Distributions (portable)</name>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- dollar property to avoid replacing some variables when filtering resources files (ex. ${user.home} in config.properties) -->
+        <dollar>$</dollar>
+        <tmp.dir>${project.build.directory}/tmp</tmp.dir>
+
+        <tmp.bundle.dir>${project.build.directory}/tmp/bundle</tmp.bundle.dir>
+
+        <pack200.ext></pack200.ext>
+
+        <felix.framework.version>5.4.0-p1</felix.framework.version>
+        <felix.gogo.version>0.16.2</felix.gogo.version>
+        <felix.gogo.shell.version>0.12.0</felix.gogo.shell.version>
+        <felix.gogo.command.version>0.16.0</felix.gogo.command.version>
+
+        <felix.servlet.version>1.0.0</felix.servlet.version>
+        <felix.bundlerepository.version>2.0.6</felix.bundlerepository.version>
+        <felix.configadmin.version>1.8.8</felix.configadmin.version>
+        <felix.prefs.version>1.0.6</felix.prefs.version>
+        <felix.scr.version>2.0.2</felix.scr.version>
+        <felix.metatype.version>1.1.2</felix.metatype.version>
+        <slf4j.version>1.7.5</slf4j.version>
+        <sling.commons.log.version>3.0.2-r1</sling.commons.log.version>
+
+        <dockingframes.version>1.1.2-P16a</dockingframes.version>
+        <substance.version>7.3</substance.version>
+        <jai.version>1.1.4-b07</jai.version>
+        <jai.native.version>1.1.4-b03</jai.native.version>
+        <weasis.imageio.native.version>1.2-b04</weasis.imageio.native.version>
+        <com.sun.media.j3d.version>1.5.2</com.sun.media.j3d.version>
+        <tilecachetool.version>1.0.2</tilecachetool.version>
+                
+        <orthodonticpreview.version>1.0.2-SNAPSHOT</orthodonticpreview.version>
+        <weasis.bundles.version>2.0.7-SNAPSHOT</weasis.bundles.version>
+
+        <windowsName>weasis-native</windowsName>
+    </properties>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>mvn-repo-master</id>
+            <url>https://raw.github.com/nroduit/mvn-repo/master/</url>
+        </pluginRepository>
+    </pluginRepositories>
+	
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-bundles</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+
+                                <!-- ===================================== -->
+                                <!-- OSGI Framework and Launcher -->
+                                <!-- (only one version, referenced in JNLP) -->
+                                <!-- ===================================== -->
+                                <artifactItem>
+                                    <groupId>org.apache.felix</groupId>
+                                    <artifactId>org.apache.felix.framework</artifactId>
+                                    <version>${felix.framework.version}</version>
+                                    <outputDirectory>${tmp.dir}</outputDirectory>
+                                    <destFileName>felix.jar</destFileName>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.weasis.launcher</groupId>
+                                    <artifactId>weasis-launcher</artifactId>
+                                    <version>${weasis.bundles.version}</version>
+                                    <outputDirectory>${tmp.dir}</outputDirectory>
+                                    <destFileName>weasis-launcher.jar</destFileName>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.weasis.thirdparty</groupId>
+                                    <artifactId>substance</artifactId>
+                                    <version>${substance.version}</version>
+                                    <outputDirectory>${tmp.dir}</outputDirectory>
+                                    <destFileName>substance.jar</destFileName>
+                                </artifactItem>
+
+                                <!-- ===================================== -->
+                                <!-- Felix bundles -->
+                                <!-- ===================================== -->
+                                <artifactItem>
+                                    <groupId>org.apache.felix</groupId>
+                                    <artifactId>org.apache.felix.gogo.runtime</artifactId>
+                                    <version>${felix.gogo.version}</version>
+                                    <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.apache.felix</groupId>
+                                    <artifactId>org.apache.felix.gogo.shell</artifactId>
+                                    <version>${felix.gogo.shell.version}</version>
+                                    <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.apache.felix</groupId>
+                                    <artifactId>org.apache.felix.gogo.command</artifactId>
+                                    <version>${felix.gogo.command.version}</version>
+                                    <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.apache.felix</groupId>
+                                    <artifactId>org.apache.felix.scr</artifactId>
+                                    <version>${felix.scr.version}</version>
+                                    <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.apache.felix</groupId>
+                                    <artifactId>org.apache.felix.metatype</artifactId>
+                                    <version>${felix.metatype.version}</version>
+                                    <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.apache.felix</groupId>
+                                    <artifactId>javax.servlet</artifactId>
+                                    <version>${felix.servlet.version}</version>
+                                    <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.apache.felix</groupId>
+                                    <artifactId>org.apache.felix.prefs</artifactId>
+                                    <version>${felix.prefs.version}</version>
+                                    <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.apache.felix</groupId>
+                                    <artifactId>org.apache.felix.bundlerepository</artifactId>
+                                    <version>${felix.bundlerepository.version}</version>
+                                    <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.apache.felix</groupId>
+                                    <artifactId>org.apache.felix.configadmin</artifactId>
+                                    <version>${felix.configadmin.version}</version>
+                                    <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                                </artifactItem>
+
+                                <!-- ===================================== -->
+                                <!-- Other required bundles -->
+                                <!-- ===================================== -->
+                                <artifactItem>
+                                    <groupId>org.slf4j</groupId>
+                                    <artifactId>slf4j-api</artifactId>
+                                    <version>${slf4j.version}</version>
+                                    <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.apache.sling</groupId>
+                                    <artifactId>org.apache.sling.commons.log</artifactId>
+                                    <version>${sling.commons.log.version}</version>
+                                    <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.weasis.thirdparty</groupId>
+                                    <artifactId>docking-frames</artifactId>
+                                    <version>${dockingframes.version}</version>
+                                    <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                                    <!-- Workaround to get a snapshot name without timestamp (download from nexus) -->
+                                    <destFileName>docking-frames-${dockingframes.version}.jar</destFileName>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.weasis.thirdparty.com.sun.media</groupId>
+                                    <artifactId>jai-lib</artifactId>
+                                    <version>${jai.version}</version>
+                                    <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.weasis.thirdparty.com.sun.media</groupId>
+                                    <artifactId>jai-lib-linux-x86</artifactId>
+                                    <version>${jai.native.version}</version>
+                                    <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.weasis.thirdparty.com.sun.media</groupId>
+                                    <artifactId>jai-lib-linux-x86-64</artifactId>
+                                    <version>${jai.native.version}</version>
+                                    <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.weasis.thirdparty.com.sun.media</groupId>
+                                    <artifactId>jai-lib-windows-x86</artifactId>
+                                    <version>${jai.native.version}</version>
+                                    <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.weasis.thirdparty.com.sun.media</groupId>
+                                    <artifactId>vecmath</artifactId>
+                                    <version>${com.sun.media.j3d.version}</version>
+                                    <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                                </artifactItem>
+
+                                <!-- ===================================== -->
+                                <!-- Weasis Core bundles -->
+                                <!-- ===================================== -->
+                                <artifactItem>
+                                    <groupId>org.weasis.core</groupId>
+                                    <artifactId>weasis-core-api</artifactId>
+                                    <version>${weasis.bundles.version}</version>
+                                    <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.weasis.core</groupId>
+                                    <artifactId>weasis-core-ui</artifactId>
+                                    <version>${weasis.bundles.version}</version>
+                                    <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                                </artifactItem>
+
+
+                                <!-- ===================================== -->
+                                <!-- Weasis Imageio bundles -->
+                                <!-- ===================================== -->
+                                <artifactItem>
+                                    <groupId>org.weasis.imageio</groupId>
+                                    <artifactId>weasis-imageio-codec</artifactId>
+                                    <version>${weasis.bundles.version}</version>
+                                    <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.weasis.imageio</groupId>
+                                    <artifactId>weasis-imageio-codec-linux-x86</artifactId>
+                                    <version>${weasis.imageio.native.version}</version>
+                                    <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.weasis.imageio</groupId>
+                                    <artifactId>weasis-imageio-codec-linux-x86-64</artifactId>
+                                    <version>${weasis.imageio.native.version}</version>
+                                    <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.weasis.imageio</groupId>
+                                    <artifactId>weasis-imageio-codec-windows-x86</artifactId>
+                                    <version>${weasis.imageio.native.version}</version>
+                                    <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                                </artifactItem>
+
+                                <!-- ===================================== -->
+                                <!-- Weasis Base bundles -->
+                                <!-- ===================================== -->
+
+                                <artifactItem>
+                                    <groupId>org.weasis.base</groupId>
+                                    <artifactId>weasis-base-viewer2d</artifactId>
+                                    <version>${weasis.bundles.version}</version>
+                                    <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                                </artifactItem>
+
+
+                                <!-- ===================================== -->
+                                <!-- Weasis DICOM bundles -->
+                                <!-- ===================================== -->
+                                <artifactItem>
+                                    <groupId>org.weasis.dicom</groupId>
+                                    <artifactId>weasis-dicom-codec</artifactId>
+                                    <version>${weasis.bundles.version}</version>
+                                    <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                                </artifactItem>
+				
+                                <artifactItem>
+                                    <groupId>org.weasis.dicom</groupId>
+                                    <artifactId>weasis-dicom-viewer2d</artifactId>
+                                    <version>${weasis.bundles.version}</version>
+                                    <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                                </artifactItem>
+
+                                                                
+                                <!-- ===================================== -->
+                                <!-- Orthodontic bundles bundles -->
+                                <!-- ===================================== -->
+
+                                <artifactItem>
+                                    <groupId>com.orthodonticpreview</groupId>
+                                    <artifactId>ortho-datamodel</artifactId>
+                                    <version>${orthodonticpreview.version}</version>
+                                    <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>com.orthodonticpreview</groupId>
+                                    <artifactId>ortho-ui</artifactId>
+                                    <version>${orthodonticpreview.version}</version>
+                                    <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>com.orthodonticpreview</groupId>
+                                    <artifactId>ortho-ui-view</artifactId>
+                                    <version>${orthodonticpreview.version}</version>
+                                    <outputDirectory>${tmp.bundle.dir}</outputDirectory>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>			
+        </plugins>
+    </build>
+    <profiles>
+        <profile>
+            <id>portable.builder</id>
+            <activation>
+                <!-- Build Portable Version -->
+                <property>
+                    <name>portable</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.akathist.maven.plugins.launch4j</groupId>
+                        <artifactId>launch4j-maven-plugin</artifactId>
+                        <version>1.7.8</version>
+                        <executions>
+                            <execution>
+                                <id>l4j-clui</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>launch4j</goal>
+                                </goals>
+                                <configuration>
+                                    <headerType>gui</headerType>
+                                    <dontWrapJar>true</dontWrapJar>
+                                    <outfile>${project.build.directory}/tmp/ortho-win32.exe</outfile>
+                                    <jar>weasis/weasis-launcher.jar</jar>
+                                    <errTitle>orthodontics</errTitle>
+                                    <icon>etc/ortho.ico</icon>
+                                    <classPath>
+                                        <mainClass>org.weasis.launcher.WeasisLauncher</mainClass>
+                                        <addDependencies>false</addDependencies>
+                                        <!-- <preCp>weasis\felix.jar;weasis\substance.jar</preCp> -->
+                                        <preCp>weasis\*.jar</preCp>
+                                    </classPath>
+                                    <singleInstance>
+                                        <!-- To disable singleInstance in portable version simply set windowsName property empty -->
+                                        <!-- $ mvn clean package -Dportable=true -DwindowsName= -->
+                                        <mutexName>${windowsName}</mutexName>
+                                    </singleInstance>
+                                    <jre>
+                                        <path>jre/windows</path>
+                                        <minVersion>1.6.0</minVersion>
+                                        <initialHeapSize>64</initialHeapSize>
+                                        <maxHeapSize>512</maxHeapSize>
+                                        <!-- Optional, defaults to 64/32; Allows to select between 64-bit and 32-bit runtimes: 1) "64" Use only 64-bit 
+                                        runtimes. 2) "64/32" Use 64-bit runtimes if available, otherwise use 32-bit. 3) "32/64" Use 32-bit runtimes if available, 
+                                        otherwise use 64-bit. 4) "32" Use only 32-bit runtimes -->
+                                        <runtimeBits>32/64</runtimeBits>
+                                        <!-- Optional, defaults to false which treats the bundled JRE as the primary runtime. When set to true, the bundled 
+                                        JRE will only be used in case the mix/max version search fails. This can be used as a fallback option if the user does not 
+                                        have the required Java installed and the bundled JRE is provided on a CD or shared network location. -->
+                                        <bundledJreAsFallback>true</bundledJreAsFallback>
+                                        <opts>
+                                            <opt>-Dweasis.portable.dir=&quot;%EXEDIR%&quot;</opt>
+                                        </opts>
+                                    </jre>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-assembly-plugin</artifactId>
+                        <version>2.6</version>
+                        <executions>
+                            <execution>
+                                <id>portable</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>attached</goal>
+                                </goals>
+                                <configuration>
+                                    <finalName>orthodontic</finalName>
+                                    <appendAssemblyId>false</appendAssemblyId>
+                                    <outputDirectory>${project.build.directory}/portable-dist</outputDirectory>
+                                    <descriptors>
+                                        <descriptor>src/assembly/portable-dist.xml</descriptor>
+                                    </descriptors>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+</project>
