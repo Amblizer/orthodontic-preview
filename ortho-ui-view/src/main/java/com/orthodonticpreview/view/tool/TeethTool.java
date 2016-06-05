@@ -81,6 +81,7 @@ import org.weasis.core.ui.editor.image.DefaultView2d;
 import org.weasis.core.ui.editor.image.ImageViewerPlugin;
 import org.weasis.core.ui.editor.image.MouseActions;
 import org.weasis.core.ui.graphic.Graphic;
+import org.weasis.core.ui.graphic.MeasureItem;
 import org.weasis.core.ui.graphic.model.GraphicsListener;
 
 /**
@@ -146,6 +147,10 @@ public class TeethTool extends PluginTool implements SeriesViewerListener,
             }
         }
 
+        @Override
+        public void updateMeasuredItems(List<MeasureItem> measureList) {
+            // Empty
+        }
     };
 
     /**
@@ -176,6 +181,11 @@ public class TeethTool extends PluginTool implements SeriesViewerListener,
                 setDrawingTool(OrthoEventManager.vectorGraphic);
             }
 
+        }
+
+        @Override
+        public void updateMeasuredItems(List<MeasureItem> measureList) {
+            // Empty
         }
     };
 
@@ -671,6 +681,11 @@ public class TeethTool extends PluginTool implements SeriesViewerListener,
             }
 
         }
+
+        @Override
+        public void updateMeasuredItems(List<MeasureItem> measureList) {
+            // Empty
+        }
     }
 
     private class CenterTeethTableCellEditor extends AbstractCellEditor
@@ -720,6 +735,11 @@ public class TeethTool extends PluginTool implements SeriesViewerListener,
                     }
                 }
             }
+        }
+
+        @Override
+        public void updateMeasuredItems(List<MeasureItem> measureList) {
+            // Empty
         }
     }
 

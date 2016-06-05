@@ -3,7 +3,7 @@
     <parent>
         <artifactId>weasis-parent</artifactId>
         <groupId>org.weasis</groupId>
-        <version>2.0.7-SNAPSHOT</version>
+        <version>2.0.7</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.orthodonticpreview</groupId>
@@ -11,17 +11,29 @@
     <version>1.0.2-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Parent of Orthodontic [${project.artifactId}]</name>
+    
+    <repositories>
+        <repository>
+            <id>mvn-repo-master</id>
+            <url>https://raw.github.com/nroduit/mvn-repo/master/</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>daily</updatePolicy>
+            </snapshots>
+        </repository>
+    </repositories>
+    
     <dependencies>
         <dependency>
             <groupId>org.weasis.core</groupId>
             <artifactId>weasis-core-api</artifactId>
-            <version>2.0.7-SNAPSHOT</version>
+            <version>2.0.7</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.weasis.core</groupId>
             <artifactId>weasis-core-ui</artifactId>
-            <version>2.0.7-SNAPSHOT</version>
+            <version>2.0.7</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

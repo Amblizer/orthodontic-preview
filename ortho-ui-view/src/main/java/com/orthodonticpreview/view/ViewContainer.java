@@ -396,7 +396,7 @@ public class ViewContainer extends ImageViewerPlugin<ImageElement>
     @Override
     public void close() {
         for (DefaultView2d<ImageElement> view : view2ds) {
-            view.dispose();
+            view.disposeView();
         }
         super.close();
     }
